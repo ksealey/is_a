@@ -1,15 +1,32 @@
 {
   "name": "isa",
   "version": "1.0.0",
-  "description": "Utility for determining value types",
+  "description": "Utility for detecting value types",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "jest"
   },
-  "author": "Khareem Sealey",
   "license": "ISC",
   "devDependencies": {
     "jest": "^27.2.4"
-  }
+  },
+  "repository": "https://github.com/ksealey/isa",
+  "author": {
+    "name": "Khareem Sealey"
+  },
+  "keywords": [
+    "validation",
+    "validator",
+    "data validation",
+    "input validation",
+    "input validator",
+    "form validation",
+    "form validator",
+    "node validator",
+    "utility",
+    "helper library",
+    "email validator",
+    "domain validator"
+  ]
 }
