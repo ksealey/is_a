@@ -6,68 +6,95 @@ function is_a(type, value, strict = true)
     switch(type)
     {
         case 'string':
-            return isaString(value);
+            return isAString(value);
         case 'number':
-            return isaNumber(value);
+            return isANumber(value);
         case 'truthy':
-            return isaTruthy(value);
+            return isATruthy(value);
         case 'falsy':
-            return isaFalsy(value);
+            return isAFalsy(value);
         case 'email':
-            return isaEmail(value);
+            return isAEmail(value);
         case 'phone':
-            return isaPhone(value);
+            return isAPhone(value);
         case 'url':
-            return isaUrl(value);
+            return isAUrl(value);
         case 'domain':
-            return isaDomain(value, strict);
+            return isADomain(value, strict);
+        case 'strong_password':
+            return isAStrongPassword(value);
         default:
             return false;
     }
 }
 
-function isaNumber(value)
+function isANumber(value)
 {
-    return typeof value === 'number';
+    return typeof value === 'number' && ! isNaN(value);
 }
 
-function isaString(value)
+function isAString(value)
 {
     return typeof value === 'string';
 }
 
-function isaTruthy(value)
+function isATruthy(value)
 {
     return value ? true : false;
 }
 
-function isaFalsy(value)
+function isAFalsy(value)
 {
     return ! value ? true : false;
 }
 
-function isaEmail(value)
+function isAEmail(value)
 {
     return /^[A-z0-9\.\-_+$]+@[A-z0-9\.\-_+$]+\.[A-z0-9]{2,10}$/.test(value);
 }
 
-function isaPhone(value)
+function isAPhone(value)
 {
     return /^(\+[0-9]{1,3})?([ \.\-])?(0-9){3}([ \.\-])?(0-9){3}([ \.\-])(0-9){4}$/.test(value);
 }
 
-function isaUrl(value)
+function isAUrl(value)
 {
     return /^http(s)?:\/\/[A-z0-9\.\-\_]+\.[A-z]{2,16}(.*)?$/i.test(value);
 }
 
-function isaDomain(value, strict)
+function isADomain(value, strict)
 {
     if( strict ){
         return /^[a-z0-9\.\-]+\.[a-z]{2,16}$/.test(value);
     }
 
     return /^[A-z0-9\.\-]+\.[A-z]{2,16}$/i.test(value);
+}
+
+function isAStrongPassword(value)
+{
+    if( value.length < 8 ){
+        return false;
+    }
+
+    if( ! /[0-9]/.test(value) ){
+        return false;
+    }
+
+    if( ! /[A-Z]/.test(value) ){
+        return false;
+    }
+
+    if( ! /[a-z]/.test(value) ){
+        return false;
+    }
+
+    if( ! /[^0-9A-z]/.test(value) ){
+        return false;
+    }
+
+    return true;
 }
 
 is_a.default = is_a;
