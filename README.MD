@@ -8,7 +8,7 @@
 
 ### Example usage
 <code>
-    const is_a = require('@defriction/is_a');
+    import is_a from '@defriction/is_a';
 
     // ... 
 
