@@ -1,5 +1,5 @@
 {
-  "name": "is_a",
+  "name": "@defriction/is_a",
   "version": "1.0.0",
   "description": "Utility for detecting value types",
   "main": "src/index.js",
