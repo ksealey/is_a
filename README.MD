@@ -3,12 +3,12 @@
 
 ### Installation
 <code>
-    npm install is_a
+    npm install @defriction/is_a
 </code>
 
 ### Example usage
 <code>
-    const is_a = require('is_a');
+    const is_a = require('@defriction/is_a');
 
     // ... 
 

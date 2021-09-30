@@ -1,5 +1,5 @@
 
-function isa(type, value, strict = true)
+function is_a(type, value, strict = true)
 {
     type = type.toLowerCase().trim();
 
@@ -70,6 +70,6 @@ function isaDomain(value, strict)
     return /^[A-z0-9\.\-]+\.[A-z]{2,16}$/i.test(value);
 }
 
-module.exports = {
-    isa: isa
-}
+is_a.default = is_a;
+
+module.exports = is_a;

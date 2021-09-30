@@ -1,6 +1,6 @@
 {
   "name": "@defriction/is_a",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility for detecting value types",
   "main": "src/index.js",
   "type": "module",
@@ -13,7 +13,8 @@
   },
   "repository": "https://github.com/ksealey/is_a",
   "author": {
-    "name": "Khareem Sealey"
+    "name": "Khareem Sealey",
+    "email": "khareem.sealey1990@gmail.com"
   },
   "keywords": [
     "validation",
