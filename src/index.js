@@ -15,12 +15,16 @@ function is_a(type, value, strict = true)
             return isAFalsy(value);
         case 'email':
             return isAEmail(value);
+        case 'email_character':
+            return isAEmailCharacter(value);
         case 'phone':
             return isAPhone(value);
         case 'url':
             return isAUrl(value);
         case 'domain':
             return isADomain(value, strict);
+        case 'domain_character':
+            return isADomainCharacter(value, strict);
         case 'strong_password':
             return isAStrongPassword(value);
         default:
@@ -53,6 +57,15 @@ function isAEmail(value)
     return /^[A-z0-9\.\-_+$]+@[A-z0-9\.\-_+$]+\.[A-z0-9]{2,10}$/.test(value);
 }
 
+function isAEmailCharacter(value)
+{
+    if((! value && value !== 0) || value.length != 1){
+        return false;
+    }
+
+    return /^[A-z0-9\.\-_+$@]$/.test(value);
+}
+
 function isAPhone(value)
 {
     return /^(\+[0-9]{1,3})?([ \.\-])?(0-9){3}([ \.\-])?(0-9){3}([ \.\-])(0-9){4}$/.test(value);
@@ -70,6 +83,19 @@ function isADomain(value, strict)
     }
 
     return /^[A-z0-9\.\-]+\.[A-z]{2,16}$/i.test(value);
+}
+
+function isADomainCharacter(value)
+{
+    if((! value && value !== 0) || value.length != 1){
+        return false;
+    }
+
+    if( strict ){
+        return /^[a-z0-9\.\-]$/.test(value);
+    }
+
+    return /^[A-z0-9\.\-]$/i.test(value);
 }
 
 function isAStrongPassword(value)
@@ -100,3 +126,5 @@ function isAStrongPassword(value)
 is_a.default = is_a;
 
 module.exports = is_a;
+
+export default is_a;
