@@ -14,19 +14,19 @@ function is_a(type, value, strict = true)
         case 'falsy':
             return isAFalsy(value);
         case 'email':
-            return isAEmail(value);
+            return isAEmail(value + '');
         case 'email_character':
-            return isAEmailCharacter(value);
+            return isAEmailCharacter(value + '');
         case 'phone':
-            return isAPhone(value);
+            return isAPhone(value + '');
         case 'url':
-            return isAUrl(value);
+            return isAUrl(value + '');
         case 'domain':
-            return isADomain(value, strict);
+            return isADomain(value + '', strict);
         case 'domain_character':
-            return isADomainCharacter(value, strict);
+            return isADomainCharacter(value+ '');
         case 'strong_password':
-            return isAStrongPassword(value);
+            return isAStrongPassword(value + '');
         default:
             return false;
     }
@@ -54,77 +54,56 @@ function isAFalsy(value)
 
 function isAEmail(value)
 {
-    return /^[A-z0-9\.\-_+$]+@[A-z0-9\.\-_+$]+\.[A-z0-9]{2,10}$/.test(value);
+    return /^[0-9A-Za-z]([A-Za-z0-9\.\_]{1,64})?[0-9A-Za-z]@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,16}$/.test(value) 
+         && value.indexOf('..') === -1
+         && value.indexOf('__') === -1
+         && value.indexOf('--') === -1
 }
 
 function isAEmailCharacter(value)
 {
-    if((! value && value !== 0) || value.length != 1){
+    if(! value || value.length != 1){
         return false;
     }
 
-    return /^[A-z0-9\.\-_+$@]$/.test(value);
+    return /^[A-Za-z0-9\.\_@]$/.test(value);
 }
 
 function isAPhone(value)
 {
-    return /^(\+[0-9]{1,3})?([ \.\-])?(0-9){3}([ \.\-])?(0-9){3}([ \.\-])(0-9){4}$/.test(value);
+    return /^(\+[0-9]{1,3})?([^0-9])?(\()?[0-9]{3}(\))?([^0-9])?[0-9]{3}([^0-9])?[0-9]{4}$/.test(value);
 }
 
 function isAUrl(value)
 {
-    return /^http(s)?:\/\/[A-z0-9\.\-\_]+\.[A-z]{2,16}(.*)?$/i.test(value);
-}
-
-function isADomain(value, strict)
-{
-    if( strict ){
-        return /^[a-z0-9\.\-]+\.[a-z]{2,16}$/.test(value);
+    const passes =  /^http(s)?:\/\/[A-Za-z0-9]([A-Za-z0-9\.\-]+)?[A-Za-z0-9]\.[A-Za-z]{2,16}(\/)?(\?)?(.*)$/i.test(value);
+    if(!passes){
+        return false;
     }
 
-    return /^[A-z0-9\.\-]+\.[A-z]{2,16}$/i.test(value);
+    const front = value.match(/^(http(s)?:\/\/[A-Za-z0-9]([A-Za-z0-9\.\-]+)?[A-Za-z0-9]\.[A-Za-z]{2,16})/i)[0];
+
+    return front.indexOf('..') === -1
+        && front.indexOf('--') === -1;
+}
+
+function isADomain(value)
+{
+    return /^[A-Za-z0-9][A-Za-z0-9\.\-]+[A-Za-z0-9]\.[A-Za-z]{2,16}$/i.test(value)
+        && value.indexOf('..') === -1
+        && value.indexOf('--') === -1;
 }
 
 function isADomainCharacter(value)
 {
-    if((! value && value !== 0) || value.length != 1){
-        return false;
-    }
-
-    if( strict ){
-        return /^[a-z0-9\.\-]$/.test(value);
-    }
-
-    return /^[A-z0-9\.\-]$/i.test(value);
+    return /^[A-Za-z0-9\-\.]{1}$/i.test(value);
 }
 
 function isAStrongPassword(value)
 {
-    if( value.length < 8 ){
-        return false;
-    }
-
-    if( ! /[0-9]/.test(value) ){
-        return false;
-    }
-
-    if( ! /[A-Z]/.test(value) ){
-        return false;
-    }
-
-    if( ! /[a-z]/.test(value) ){
-        return false;
-    }
-
-    if( ! /[^0-9A-z]/.test(value) ){
-        return false;
-    }
-
-    return true;
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
 }
 
 is_a.default = is_a;
 
 module.exports = is_a;
-
-export default is_a;
